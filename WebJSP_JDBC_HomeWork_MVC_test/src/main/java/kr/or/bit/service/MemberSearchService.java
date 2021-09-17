@@ -30,7 +30,6 @@ public class MemberSearchService implements Action {
 			
 			MemberDao dao = new MemberDao();
 			List<Member> searchlist = dao.getSearchListByName(name);
-			System.out.println("name : " + name);
 
 			if (searchlist.size() > 0) {
 				request.setAttribute("searchlist", searchlist);

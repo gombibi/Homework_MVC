@@ -25,7 +25,6 @@ public class MemberUpdateService implements Action {
 			 Member m = dao.getMemberDetailById(id);
 			 m.setGender(m.getGender().trim());
 			 request.setAttribute("MemberUpdate", m);
-			 System.out.println(m.getId());
 		
 			 forward = new ActionForward();
 			 forward.setRedirect(false); //forward
