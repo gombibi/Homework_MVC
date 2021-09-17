@@ -39,22 +39,20 @@
 
 			<td style="width: 700px">
 			
-			<c:set var="Memberlist" value="${requestScope.Memberlist}"></c:set>
+			<c:set var="searchlist" value="${requestScope.searchlist}"></c:set>
 				<div align=center>
 				<table style="width: 400px;height: 100px;margin-left: auto;margin-right: auto">
 					<tr><th colspan="4">회원 리스트</th></tr> 
 					<tr>
 						<th>ID</th> 
-						<th>IP</th>
-						<th>삭제</th>
-						<th>수정</th>
+						<th>이름</th>
+						<th>Email</th>
 					</tr>
-					<c:forEach var="Member" items="${Memberlist}">
+					<c:forEach var="member" items="${searchlist}">
 						<tr>
-							<td width="100px"><a href="MemberDetail.me?id=${Member.id}">${Member.id}</a></td>
-							<td width="100px"><a href="MemberDetail.me?id=${Member.id}">${Member.ip}</a></td>
-							<td width="100px"><a href="MemberDelete.me?id=${Member.id}">[삭제]</a></td>
-							<td width="100px"><a href="MemberUpdate.me?id=${Member.id}">[수정]</a></td>
+							<td width="100px">${member.id}</td>
+							<td width="100px">${member.name}</td>
+							<td width="100px">${member.email}</td>
 						</tr>
 					</c:forEach>
 				</table>

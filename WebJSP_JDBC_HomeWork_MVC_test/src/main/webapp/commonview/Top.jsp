@@ -8,10 +8,10 @@
 <a href="#">Intro</a>&nbsp;&nbsp;&nbsp;||
 <a href="#">Intro</a>&nbsp;&nbsp;&nbsp;
 
-<c:set var="id" value="${param.id}"/> <!-- sessionScope 생략 -->
+<c:set var="id" value="${userid}"/> <!-- sessionScope 생략 -->
 	<c:choose>
-		<c:when test="${id!=null}">
-			<b>${param.id}</b> 로그인 상태
+		<c:when test="${userid!=null}">
+			<b>${userid}</b> 로그인 상태
 			<a href='Logout.jsp'>[ 로그아웃 ]</a>
 		</c:when>
 		<c:otherwise>

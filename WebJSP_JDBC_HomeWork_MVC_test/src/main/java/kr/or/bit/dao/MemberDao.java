@@ -62,7 +62,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		boolean loginok = false;
-		
+
 		try {
 			conn = ConnectionHelper.getConnection("oracle");// 추가
 			String sql = "select id, pwd from koreamember where id=?";
@@ -94,30 +94,171 @@ public class MemberDao {
 		}
 		return loginok;
 	}
-	
-	//회원 목록(리스트) 출력
-	//목록 (select id, ip from koreamember)
-public ArrayList<Member> getMemberList() throws SQLException{
-		
-		Connection conn = ConnectionHelper.getConnection("oracle"); //객체 얻기
-		
+
+	// 회원 목록(리스트) 출력
+	// 목록 (select id, ip from koreamember)
+	public ArrayList<Member> getMemberList() throws SQLException {
+
+		Connection conn = ConnectionHelper.getConnection("oracle"); // 객체 얻기
+
 		PreparedStatement pstmt = null;
-		String sql="select id, ip from koreamember";
+		String sql = "select id, ip from koreamember";
 		pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
-		
+
 		ArrayList<Member> memberlist = new ArrayList<>();
-		while(rs.next()) {
+		while (rs.next()) {
 			Member m = new Member();
 			m.setId(rs.getString("id"));
 			m.setEmail(rs.getString("ip"));
 			memberlist.add(m);
 		}
-		
+
 		ConnectionHelper.close(rs);
 		ConnectionHelper.close(pstmt);
-		ConnectionHelper.close(conn); //반환하기
-		
+		ConnectionHelper.close(conn); // 반환하기
+
 		return memberlist;
+	}
+	
+	//Delete
+	//delete from koreamember where id=?
+	public int deleteMember(String id) {
+		Connection conn = null;
+		int resultrow=0;
+		PreparedStatement pstmt = null;
+		try {
+				conn= ConnectionHelper.getConnection("oracle");
+				String sql = "delete from koreamember where id=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, id);
+				resultrow = pstmt.executeUpdate();
+				
+		}catch(Exception e) {
+			System.out.println("delete : " + e.getMessage());
+		}finally {
+			ConnectionHelper.close(pstmt);
+			ConnectionHelper.close(conn);
+			try {
+				conn.close(); //반환하기
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return resultrow;
+	}
+	
+	//Update
+	//update koreamember set name=? , age=? , email=? , gender=?
+    //where id=?
+	public int updateMember(Member m) {
+		Connection conn = null;//추가
+		int resultrow=0;
+		PreparedStatement pstmt = null;
+		try {
+			conn= ConnectionHelper.getConnection("oracle");//추가
+			String sql = "update koreamember set name=? , age=? , email=? , gender=? where id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, m.getName());
+			pstmt.setInt(2, m.getAge());
+			pstmt.setString(3, m.getEmail());
+			pstmt.setString(4, m.getGender());
+			pstmt.setString(5, m.getId());
+			resultrow = pstmt.executeUpdate();
+				
+		}catch(Exception e) {
+			System.out.println("update : " + e.getMessage());
+		}finally {
+			ConnectionHelper.close(pstmt);
+			ConnectionHelper.close(conn);
+			try {
+				conn.close(); //반환하기
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return resultrow;
+	}
+	
+	//1건의 데이터 read (where 조건으로 사용되는 컬럼은 반드시 unique , primary key)
+	public Member getMemberDetailById(String id) {
+
+		Connection conn =null;//추가
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Member m = null;
+		
+		try {
+				conn= ConnectionHelper.getConnection("oracle");//추가
+				String sql = "select id,pwd,name,age,gender,email from koreamember where id=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, id);
+				
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					m = new Member();
+					m.setId(rs.getString("id"));
+					m.setPwd(rs.getString("pwd"));
+					m.setName(rs.getString("name"));
+					m.setAge(rs.getInt("age"));
+					m.setGender(rs.getString("gender"));
+					m.setEmail(rs.getString("email"));
+				}
+				
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+		}finally {
+			ConnectionHelper.close(rs);
+			ConnectionHelper.close(pstmt);
+			ConnectionHelper.close(conn);
+			try {
+				conn.close();//반환하기
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			} 
+		}
+		return m;
+	}
+	
+	//select count(*) from koreamember where name like ?
+	public ArrayList<Member> getSearchListByName(String name) {
+
+		Connection conn =null;//추가
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Member m = null;
+		ArrayList<Member> searchlist= new ArrayList<Member>();
+		try {
+				conn= ConnectionHelper.getConnection("oracle");//추가
+				String sql = "select * from koreamember where name=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, name);
+				
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					m = new Member();
+					m.setId(rs.getString("id"));
+					m.setName(rs.getString("name"));
+					m.setEmail(rs.getString("email"));
+					searchlist.add(m);
+				}
+				
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+		}finally {
+			ConnectionHelper.close(rs);
+			ConnectionHelper.close(pstmt);
+			ConnectionHelper.close(conn);
+			try {
+				conn.close();//반환하기
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			} 
+		}
+		return searchlist;
 	}
 }

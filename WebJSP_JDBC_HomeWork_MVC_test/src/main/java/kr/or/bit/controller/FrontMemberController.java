@@ -11,9 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
+import kr.or.bit.service.MemberDeleteService;
+import kr.or.bit.service.MemberDetailService;
 import kr.or.bit.service.MemberJoinService;
 import kr.or.bit.service.MemberListService;
 import kr.or.bit.service.MemberLoginService;
+import kr.or.bit.service.MemberSearchService;
+import kr.or.bit.service.MemberUpdateOkService;
+import kr.or.bit.service.MemberUpdateService;
 
 @WebServlet("*.me")
 public class FrontMemberController extends HttpServlet {
@@ -49,6 +54,36 @@ public class FrontMemberController extends HttpServlet {
     		action = new MemberListService();
     		forward = action.execute(request, response);
     		System.out.println("MemberListService 실행");
+    		
+    	}else if(url_Command.equals("/MemberDelete.me")) { //회원 삭제
+    		//UI+로직
+    		action = new MemberDeleteService();
+    		forward = action.execute(request, response);
+    		System.out.println("MemberDeleteService 실행");
+    	
+    	}else if(url_Command.equals("/MemberUpdate.me")) { //회원 업데이트 페이지 이동
+    		//UI+로직
+    		action = new MemberUpdateService();
+    		forward = action.execute(request, response);
+    		System.out.println("MemberUpdateService 실행");
+    		
+    	}else if(url_Command.equals("/MemberUpdateOk.me")) { //회원 업데이트
+    		//UI+로직
+    		action = new MemberUpdateOkService();
+    		forward = action.execute(request, response);
+    		System.out.println("MemberUpdateOkService 실행");
+    		
+    	}else if(url_Command.equals("/MemberDetail.me")) { //회원 업데이트
+    		//UI+로직
+    		action = new MemberDetailService();
+    		forward = action.execute(request, response);
+    		System.out.println("MemberDetailService 실행");
+    		
+    	}else if(url_Command.equals("/MemberSearch.me")) { //회원 검색
+    		//UI+로직
+    		action = new MemberSearchService();
+    		forward = action.execute(request, response);
+    		System.out.println("MemberSearchService 실행");
     	}
     	
     	
