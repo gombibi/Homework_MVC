@@ -23,6 +23,7 @@ public class MemberUpdateService implements Action {
 		try {
 			 MemberDao dao = new MemberDao();
 			 Member m = dao.getMemberDetailById(id);
+			 m.setGender(m.getGender().trim());
 			 request.setAttribute("MemberUpdate", m);
 			 System.out.println(m.getId());
 		

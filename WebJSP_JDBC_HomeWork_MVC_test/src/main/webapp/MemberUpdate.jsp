@@ -54,36 +54,36 @@
 				  			 	<tr>
 				  			 		<td style="width:100px">비번</td>
 				  			 		<td> 
-				  			 			<input type="text" name="id" value="${member.pwd}">
+				  			 			<input type="text"  value="${member.pwd}">
 				  			 		</td> 
 				  			 	</tr>
 				  			 	<tr>
 				  			 		<td style="width:100px">이름</td>
 				  			 		<td> 
-				  			 			<input type="text" name="id" value="${member.name}" style="background-color: yellow">
+				  			 			<input type="text" name="name" value="${member.name}" style="background-color: yellow">
 				  			 		</td> 
 				  			 	</tr>
 				  			 	<tr>
 				  			 		<td style="width:100px">나이</td>
 				  			 		<td> 
-				  			 			<input type="text" name="id" value="${member.age}" style="background-color: yellow">
+				  			 			<input type="text" name="age" value="${member.age}" style="background-color: yellow">
 				  			 		</td>
 				  			 	</tr>
 				  			 	<tr>
 				  			 		<td style="width:100px">성별</td>
 				  			 		<td> 
-				  			 			<input type='hidden' id='gender' value="${member.gender}">
-								    	<input type="radio" name="gender" id="gender" value="남"
-								    	<c:if test="${member.gender eq '남'}"> checked </c:if>> 남자 
-								    	<input type="radio" name="gender" id="gender" value="여"
-								    	<c:if test="${member.gender eq '여'}"> checked </c:if>> 여자 <br>
-								    	
+								    	<input type="radio" name="gender" id="gender" value="남" 
+								    		<c:if test="${member.gender eq '남'}">checked</c:if>> 
+								    	<label for="gender">남자</label> 
+								    	<input type="radio" name="gender" id="gender" value="여" 
+								    	<c:if test="${member.gender eq '여'}">checked</c:if>>
+								    	<label for="gender">여자</label>
 				  			 		</td>
 				  			 	</tr>
 				  			 	<tr>
 				  			 		<td style="width:100px">이메일</td>
 				  			 		<td>
-				  			 		<input type="text" name="id" value="${member.email}" style="background-color: yellow">
+				  			 		<input type="text" name="email" value="${member.email}" style="background-color: yellow">
 				  			 		</td>
 				  			 	</tr>
 				  			 	<tr>
