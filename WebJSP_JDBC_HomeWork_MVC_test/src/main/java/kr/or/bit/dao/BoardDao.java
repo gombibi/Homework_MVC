@@ -24,7 +24,7 @@ memo table 에 데이터 에 대해서
 public class BoardDao {
 
 	// Insert
-	public int insertMember(Member m) {
+	public int boardWrite(Board b) {
 		Connection conn = null;// 추가
 		int resultrow = 0;
 		PreparedStatement pstmt = null;
@@ -32,15 +32,13 @@ public class BoardDao {
 		try {
 			conn = ConnectionHelper.getConnection("oracle");// 추가
 
-			String sql = "insert into koreamember(id,pwd,name,age,gender,email,ip) values(?,?,?,?,?,?,?)";
+			String sql = "insert into testboard(idx,writer,subject,content,writedate) values(?,?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, m.getId());
-			pstmt.setString(2, m.getPwd());
-			pstmt.setString(3, m.getName());
-			pstmt.setInt(4, m.getAge());
-			pstmt.setString(5, m.getGender());
-			pstmt.setString(6, m.getEmail());
-			pstmt.setString(7, m.getIp());
+			pstmt.setInt(1, b.getIdx());
+			pstmt.setString(2, b.getWriter());
+			pstmt.setString(3, b.getSubject());
+			pstmt.setString(4, b.getContent());
+			pstmt.setString(5, b.getWritedate());
 
 			resultrow = pstmt.executeUpdate();
 

@@ -20,8 +20,9 @@ import kr.or.bit.service.MemberSearchService;
 import kr.or.bit.service.MemberUpdateOkService;
 import kr.or.bit.service.MemberUpdateService;
 import kr.or.bit.service.board.BoardListService;
+import kr.or.bit.service.board.BoardWriteService;
 
-@WebServlet("*.bo")
+@WebServlet("*.bd")
 public class FrontBoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -44,7 +45,13 @@ public class FrontBoardController extends HttpServlet {
     		forward = action.execute(request, response);
     		System.out.println("BoardListService 실행");
     		
-    	}    	
+    	}else if(url_Command.equals("/BoardWrite.bd")) { //게시판 글쓰기
+    		//UI+로직
+    		action = new BoardWriteService();
+    		forward = action.execute(request, response);
+    		System.out.println("BoardWriteService 실행");
+    		
+    	}      	
     	
     	if(forward != null) {
     		if(forward.isRedirect()) { //true 

@@ -56,6 +56,11 @@
 							<td width="100px">${Board.writer}</td>
 							<td width="100px">${Board.writedate}</td>
 						</tr>
+						<tr>
+				  			 <td colspan="2">
+				  			 <a href="BoardWrite.bd">글쓰기</a>
+				  			 </td>
+				  		</tr>
 					</c:forEach>
 				</table>
 				</div>	

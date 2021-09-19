@@ -9,9 +9,7 @@ import javax.servlet.http.HttpSession;
 import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
 import kr.or.bit.dao.BoardDao;
-import kr.or.bit.dao.MemberDao;
 import kr.or.bit.dto.Board;
-import kr.or.bit.dto.Member;
 
 public class BoardListService implements Action {
 
@@ -35,7 +33,7 @@ public class BoardListService implements Action {
 				
 				forward = new ActionForward();
 				forward.setRedirect(false); //forward
-				forward.setPath("BoardList.jsp");
+				forward.setPath("/board/BoardList.jsp");
 			
 			}else {
 				msg = "로그인 후 이용 가능합니다";
