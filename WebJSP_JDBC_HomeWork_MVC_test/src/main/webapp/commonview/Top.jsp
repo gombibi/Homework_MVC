@@ -5,7 +5,7 @@
 <a href="Main.jsp">Main</a>&nbsp;&nbsp;&nbsp;||
 <a href="Login.jsp">Login</a>&nbsp;&nbsp;&nbsp;||
 <a href="JoinForm.jsp">Register</a>&nbsp;&nbsp;&nbsp;||
-<a href="#">Board</a>&nbsp;&nbsp;&nbsp;||
+<a href="BoardList.bd">Board</a>&nbsp;&nbsp;&nbsp;||
 <a href="#">Map</a>&nbsp;&nbsp;&nbsp;
 
 <c:set var="id" value="${userid}"/> <!-- sessionScope 생략 -->

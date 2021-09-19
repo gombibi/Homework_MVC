@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import kr.or.bit.dto.Board;
 import kr.or.bit.dto.Member;
 import kr.or.bit.utils.ConnectionHelper;
 
@@ -95,30 +96,31 @@ public class BoardDao {
 		return loginok;
 	}
 
-	// 회원 목록(리스트) 출력
-	// 목록 (select id, ip from koreamember)
-	public ArrayList<Member> getMemberList() throws SQLException {
+	// 게시판 목록(리스트) 출력
+	public ArrayList<Board> getBoardList() throws SQLException {
 
 		Connection conn = ConnectionHelper.getConnection("oracle"); // 객체 얻기
 
 		PreparedStatement pstmt = null;
-		String sql = "select id, ip from koreamember";
+		String sql = "select idx, subject, writer, writedate from testboard";
 		pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 
-		ArrayList<Member> memberlist = new ArrayList<>();
+		ArrayList<Board> boardlist = new ArrayList<>();
 		while (rs.next()) {
-			Member m = new Member();
-			m.setId(rs.getString("id"));
-			m.setEmail(rs.getString("ip"));
-			memberlist.add(m);
+			Board b = new Board();
+			b.setIdx(rs.getInt("idx"));
+			b.setSubject(rs.getString("subject"));
+			b.setWriter(rs.getString("writer"));
+			b.setWritedate(rs.getString("Writedate"));
+			boardlist.add(b);
 		}
 
 		ConnectionHelper.close(rs);
 		ConnectionHelper.close(pstmt);
 		ConnectionHelper.close(conn); // 반환하기
 
-		return memberlist;
+		return boardlist;
 	}
 	
 	//Delete
