@@ -15,7 +15,6 @@ public class MemberDeleteService implements Action {
 		
 		HttpSession session = request.getSession();
 		String str = (String) session.getAttribute("userid");
-
 		
 		String id = request.getParameter("id");
 		
