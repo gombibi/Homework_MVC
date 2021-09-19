@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import kr.or.bit.dto.Member;
 import kr.or.bit.utils.ConnectionHelper;
+import kr.or.bit.utils.SqlManager;
 
 /*
 DB작업
@@ -20,8 +21,30 @@ memo table 에 데이터 에 대해서
 삭제 : delete from memo where id=?
 삽입 : insert into memo(id,email,content) values(?,?,?)
 */
+
+/*
+CREATE TABLE testboard(
+  idx NUMBER PRIMARY KEY,
+  writer NVARCHAR2(30) NOT NULL,
+  subject NVARCHAR2(50) NOT NULL,
+  content NVARCHAR2(100) NOT NULL,
+  writedate DATE DEFAULT SYSDATE)
+*/
 public class BoardDao {
 
+	public void createTable() {
+		String sql = "CREATE TABLE testboard("
+				+ "idx NUMBER PRIMARY KEY,"
+				+ " writer NVARCHAR2(30) NOT NULL,"
+				+ " subject NVARCHAR2(50) NOT NULL,"
+				+ " content NVARCHAR2(100) NOT NULL,"
+				+ " writedate DATE DEFAULT SYSDATE)";
+		
+		SqlManager.run(sql, pstmt -> {
+			pstmt.execute();
+		});
+	}
+	
 	// Insert
 	public int insertMember(Member m) {
 		Connection conn = null;// 추가
