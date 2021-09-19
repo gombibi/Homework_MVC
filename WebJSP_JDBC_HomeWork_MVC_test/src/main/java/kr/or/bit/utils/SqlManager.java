@@ -6,16 +6,16 @@ import java.sql.SQLException;
 
 public class SqlManager {
 
-	public static void run(String sql, CallbackInterface callback) {
+	public static <T> T run(String sql, CallbackInterface<T> callback) {
 		Connection conn = null;// 추가
 		PreparedStatement pstmt = null;
 		try {
 			conn = ConnectionHelper.getOracleConnection();
-			System.out.println(sql);
+			System.out.println("--> " + sql);
 			pstmt = conn.prepareStatement(sql);
-			callback.callbackPreparedStatement(pstmt);
+			return callback.callbackPreparedStatement(pstmt);
 		} catch (Exception e) {
-			System.out.println("createTable exception : " + e.getMessage());
+			System.out.println("--> sql exception : " + e.getMessage());
 		} finally {
 			ConnectionHelper.close(pstmt);
 			ConnectionHelper.close(conn);
@@ -25,9 +25,10 @@ public class SqlManager {
 				e.printStackTrace();
 			}
 		}
+		return null;
 	}
 
-	public interface CallbackInterface {
-		void callbackPreparedStatement(PreparedStatement pstmt) throws SQLException;
+	public interface CallbackInterface<T> {
+		T callbackPreparedStatement(PreparedStatement pstmt) throws SQLException;
 	}
 }

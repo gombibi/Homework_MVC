@@ -33,7 +33,7 @@ CREATE TABLE testboard(
 */
 public class BoardDao {
 
-	public void createTable() {
+	public int createTable() {
 		String sql = "CREATE TABLE testboard("
 				+ "idx NUMBER PRIMARY KEY,"
 				+ " writer NVARCHAR2(30) NOT NULL,"
@@ -41,46 +41,13 @@ public class BoardDao {
 				+ " content NVARCHAR2(100) NOT NULL,"
 				+ " writedate DATE DEFAULT SYSDATE)";
 		
-		SqlManager.run(sql, pstmt -> {
-			pstmt.execute();
-		});
+		int result = SqlManager.run(sql, pstmt ->
+		
+			1234
+		);
+		return result;
 	}
 	
-	// Insert
-	public int insertMember(Member m) {
-		Connection conn = null;// 추가
-		int resultrow = 0;
-		PreparedStatement pstmt = null;
-
-		try {
-			conn = ConnectionHelper.getConnection("oracle");// 추가
-
-			String sql = "insert into koreamember(id,pwd,name,age,gender,email,ip) values(?,?,?,?,?,?,?)";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, m.getId());
-			pstmt.setString(2, m.getPwd());
-			pstmt.setString(3, m.getName());
-			pstmt.setInt(4, m.getAge());
-			pstmt.setString(5, m.getGender());
-			pstmt.setString(6, m.getEmail());
-			pstmt.setString(7, m.getIp());
-
-			resultrow = pstmt.executeUpdate();
-
-		} catch (Exception e) {
-			System.out.println("Insert : " + e.getMessage());
-		} finally {
-			ConnectionHelper.close(pstmt);
-			ConnectionHelper.close(conn);
-			try {
-				conn.close(); // 반환하기
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return resultrow;
-	}
-
 	public boolean checkIdPwd(String id, String pwd) {
 		Connection conn = null;// 추가
 		PreparedStatement pstmt = null;
