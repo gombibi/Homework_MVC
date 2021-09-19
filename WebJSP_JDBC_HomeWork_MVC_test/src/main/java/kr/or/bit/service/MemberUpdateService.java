@@ -13,32 +13,48 @@ public class MemberUpdateService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		
-		HttpSession session = request.getSession();
-		String str = (String) session.getAttribute("userid");
 
+		HttpSession session = request.getSession();
+		String loginMember = (String) session.getAttribute("userid");
 		
-		ActionForward forward = null;
-		String id = request.getParameter("id");
-		try {
-			 MemberDao dao = new MemberDao();
-			 Member m = dao.getMemberDetailById(id);
-			 m.setGender(m.getGender().trim());
-			 request.setAttribute("MemberUpdate", m);
+		ActionForward forward=null;
 		
-			 forward = new ActionForward();
-			 forward.setRedirect(false); //forward
-			 forward.setPath("MemberUpdate.jsp");
+		String msg = "";
+		String url = "";
+		
+		try{
+			//관리자 ID(admin)이 아닐 경우 접근 불가
+			if(request.getSession().getAttribute("userid").equals("admin")) {
+				String id = request.getParameter("id");
+				try {
+					 MemberDao dao = new MemberDao();
+					 Member m = dao.getMemberDetailById(id);
+					 m.setGender(m.getGender().trim());
+					 request.setAttribute("MemberUpdate", m);
+				
+					 forward = new ActionForward();
+					 forward.setRedirect(false); //forward
+					 forward.setPath("MemberUpdate.jsp");
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+				return forward;
+			
+			}else {
+				msg = "권한이 없습니다";
+				url = "Login.jsp";
+				
+				request.setAttribute("board_msg",msg);
+			    request.setAttribute("board_url", url);
+			
+			    forward = new ActionForward();
+			    forward.setRedirect(false);
+			    forward.setPath("/WEB-INF/views/redirect.jsp");
+			}
+			
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return forward;
 	}
-
 }
-
-
-
-
-
-

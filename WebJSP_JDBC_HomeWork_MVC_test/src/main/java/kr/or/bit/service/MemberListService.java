@@ -17,7 +17,7 @@ public class MemberListService implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		
 		HttpSession session = request.getSession();
-		String str = (String) session.getAttribute("userid");
+		String loginMember = (String) session.getAttribute("userid");
 		
 		ActionForward forward=null;
 		
@@ -25,6 +25,7 @@ public class MemberListService implements Action {
 		String url = "";
 		
 		try{
+			//관리자 ID(admin)이 아닐 경우 접근 불가
 			if(request.getSession().getAttribute("userid").equals("admin")) {
 				MemberDao dao = new MemberDao();
 				List<Member> memberlist = dao.getMemberList();
