@@ -33,7 +33,7 @@ CREATE TABLE testboard(
 */
 public class BoardDao {
 
-	public int createTable() {
+	public void createTable() {
 		String sql = "CREATE TABLE testboard("
 				+ "idx NUMBER PRIMARY KEY,"
 				+ " writer NVARCHAR2(30) NOT NULL,"
@@ -41,11 +41,7 @@ public class BoardDao {
 				+ " content NVARCHAR2(100) NOT NULL,"
 				+ " writedate DATE DEFAULT SYSDATE)";
 		
-		int result = SqlManager.run(sql, pstmt ->
-		
-			1234
-		);
-		return result;
+		SqlManager.run(sql, pstmt -> pstmt.execute());
 	}
 	
 	public boolean checkIdPwd(String id, String pwd) {
