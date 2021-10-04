@@ -11,16 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
-import kr.or.bit.service.MemberDeleteService;
-import kr.or.bit.service.MemberDetailService;
-import kr.or.bit.service.MemberJoinService;
-import kr.or.bit.service.MemberListService;
-import kr.or.bit.service.MemberLoginService;
-import kr.or.bit.service.MemberSearchService;
-import kr.or.bit.service.MemberUpdateOkService;
-import kr.or.bit.service.MemberUpdateService;
+import kr.or.bit.service.board.BoardContentService;
+import kr.or.bit.service.board.BoardEditOkService;
+import kr.or.bit.service.board.BoardEditService;
 import kr.or.bit.service.board.BoardListService;
-import kr.or.bit.service.board.BoardWriteService;
+import kr.or.bit.service.board.BoardReplyOkService;
+import kr.or.bit.service.board.BoardRewriteOkService;
+import kr.or.bit.service.board.BoardRewriteService;
+import kr.or.bit.service.board.BoardWriteOkService;
+import kr.or.bit.service.board.ReplyDeleteOkService;
 
 @WebServlet("*.bd")
 public class FrontBoardController extends HttpServlet {
@@ -47,11 +46,61 @@ public class FrontBoardController extends HttpServlet {
     		
     	}else if(url_Command.equals("/BoardWrite.bd")) { //게시판 글쓰기
     		//UI+로직
-    		action = new BoardWriteService();
-    		forward = action.execute(request, response);
-    		System.out.println("BoardWriteService 실행");
+    		forward = new ActionForward();
+    		forward.setRedirect(false);
+    		forward.setPath("WEB-INF/views/board/Boardwrite.jsp");
     		
-    	}      	
+    	}
+    	else if(url_Command.equals("/BoardWriteOk.bd")) { //게시판 글쓰기
+    		//UI+로직
+    		action = new BoardWriteOkService();
+    		forward = action.execute(request, response);
+    		System.out.println("BoardWriteOkService 실행");
+    		
+    	}else if(url_Command.equals("/BoardContent.bd")) { //게시판 글쓰기
+    		//UI+로직
+    		action = new BoardContentService();
+    		forward = action.execute(request, response);
+    		System.out.println("BoardContentService 실행");
+    		
+    	}else if(url_Command.equals("/BoardEdit.bd")) { //게시판 글쓰기
+    		//UI+로직
+    		action = new BoardEditService();
+    		forward = action.execute(request, response);
+    		System.out.println("BoardEditService 실행");
+    		
+    	}else if(url_Command.equals("/BoardEditOk.bd")) { //게시판 글쓰기
+    		//UI+로직
+    		action = new BoardEditOkService();
+    		forward = action.execute(request, response);
+    		System.out.println("BoardEditOkService 실행");
+    		
+    	}else if(url_Command.equals("/ReplyOk.bd")) { //게시판 글쓰기
+    		//UI+로직
+    		action = new BoardReplyOkService();
+    		forward = action.execute(request, response);
+    		System.out.println("BoardReplyOkService 실행");
+    		
+    	}else if(url_Command.equals("/ReplyDeleteOk.bd")) { //게시판 글쓰기
+    		//UI+로직
+    		action = new ReplyDeleteOkService();
+    		forward = action.execute(request, response);
+    		System.out.println("ReplyDeleteOkService 실행");
+    		
+    	}else if(url_Command.equals("/BoardRewrite.bd")) { //답글쓰기
+    		//UI+로직
+    		action = new BoardRewriteService();
+    		forward = action.execute(request, response);
+    		System.out.println("BoardRewriteService 실행");
+    		
+    	}else if(url_Command.equals("/BoardRewriteOk.bd")) { //답글쓰기
+    		//UI+로직
+    		action = new BoardRewriteOkService();
+    		forward = action.execute(request, response);
+    		System.out.println("BoardRewriteOkService 실행");
+    		
+    	}                            	    	
+
     	
     	if(forward != null) {
     		if(forward.isRedirect()) { //true 

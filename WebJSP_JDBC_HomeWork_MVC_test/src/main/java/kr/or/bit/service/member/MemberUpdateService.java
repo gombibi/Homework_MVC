@@ -1,4 +1,4 @@
-package kr.or.bit.service;
+package kr.or.bit.service.member;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,7 +34,7 @@ public class MemberUpdateService implements Action {
 				
 					 forward = new ActionForward();
 					 forward.setRedirect(false); //forward
-					 forward.setPath("MemberUpdate.jsp");
+					 forward.setPath("WEB-INF/views/member/MemberUpdate.jsp");
 				}catch (Exception e) {
 					System.out.println(e.getMessage());
 				}

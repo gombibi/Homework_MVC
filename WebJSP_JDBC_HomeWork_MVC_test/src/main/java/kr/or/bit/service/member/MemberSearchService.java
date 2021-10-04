@@ -1,4 +1,4 @@
-package kr.or.bit.service;
+package kr.or.bit.service.member;
 
 import java.util.List;
 
@@ -28,21 +28,22 @@ public class MemberSearchService implements Action {
 			//관리자 ID(admin)이 아닐 경우 접근 불가
 			if(request.getSession().getAttribute("userid").equals("admin")) {
 				try {
-					String name = request.getParameter("search");
+					String searchname = request.getParameter("search");
 					
 					MemberDao dao = new MemberDao();
-					List<Member> searchlist = dao.getSearchListByName(name);
+					List<Member> searchlist = dao.getSearchListByName(searchname);
 
 					if (searchlist.size() > 0) {
 						request.setAttribute("searchlist", searchlist);
-
+						
 						forward = new ActionForward();
-						forward.setRedirect(false); // forward
-						forward.setPath("MemberSearch.jsp");
+						forward.setRedirect(false);
+						forward.setPath("WEB-INF/views/member/MemberSearch.jsp");
+
 					} else {
 
 						msg = "조회결과가 없습니다";
-						url = "Memberlist.jsp";
+						url = "Memberlist.me";
 
 						request.setAttribute("board_msg", msg);
 						request.setAttribute("board_url", url);
@@ -59,7 +60,7 @@ public class MemberSearchService implements Action {
 			
 			}else {
 				msg = "권한이 없습니다";
-				url = "Login.jsp";
+				url = "WEB-INF/views/member/Login.jsp";
 				
 				request.setAttribute("board_msg",msg);
 			    request.setAttribute("board_url", url);

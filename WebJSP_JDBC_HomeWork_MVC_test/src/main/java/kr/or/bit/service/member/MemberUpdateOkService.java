@@ -1,4 +1,4 @@
-package kr.or.bit.service;
+package kr.or.bit.service.member;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

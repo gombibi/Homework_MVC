@@ -1,4 +1,4 @@
-package kr.or.bit.service;
+package kr.or.bit.service.member;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,7 +30,7 @@ public class MemberJoinService implements Action {
 		m.setAge(age);
 		m.setGender(gender);
 		m.setEmail(email);
-		m.setId(id);
+		m.setIp(ip);
 		
     	MemberDao dao = new MemberDao(); //POINT
 		int result = dao.insertMember(m);

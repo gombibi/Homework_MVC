@@ -1,4 +1,4 @@
-package kr.or.bit.service;
+package kr.or.bit.service.member;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class MemberDetailService implements Action {
 					 
 					 forward = new ActionForward();
 					 forward.setRedirect(false); //forward
-					 forward.setPath("MemberDetail.jsp");
+					 forward.setPath("WEB-INF/views/member/MemberDetail.jsp");
 				}catch (Exception e) {
 					System.out.println(e.getMessage());
 				}

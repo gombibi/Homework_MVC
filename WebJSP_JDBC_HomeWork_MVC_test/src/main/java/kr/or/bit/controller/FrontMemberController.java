@@ -11,14 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
-import kr.or.bit.service.MemberDeleteService;
-import kr.or.bit.service.MemberDetailService;
-import kr.or.bit.service.MemberJoinService;
-import kr.or.bit.service.MemberListService;
-import kr.or.bit.service.MemberLoginService;
-import kr.or.bit.service.MemberSearchService;
-import kr.or.bit.service.MemberUpdateOkService;
-import kr.or.bit.service.MemberUpdateService;
+import kr.or.bit.service.member.MemberDeleteService;
+import kr.or.bit.service.member.MemberDetailService;
+import kr.or.bit.service.member.MemberIdCheckService;
+import kr.or.bit.service.member.MemberJoinService;
+import kr.or.bit.service.member.MemberListService;
+import kr.or.bit.service.member.MemberLoginService;
+import kr.or.bit.service.member.MemberSearchService;
+import kr.or.bit.service.member.MemberUpdateOkService;
+import kr.or.bit.service.member.MemberUpdateService;
 
 @WebServlet("*.me")
 public class FrontMemberController extends HttpServlet {
@@ -43,6 +44,11 @@ public class FrontMemberController extends HttpServlet {
     		forward = action.execute(request, response);
     		System.out.println("MemberJoinService 실행");
     		
+    	}else if(url_Command.equals("/LoginIdCheck.me")) { //비동기(ID 사용 유무)
+    		action = new MemberIdCheckService();
+    		forward = action.execute(request, response);
+    		System.out.println("MemberIdCheckService 실행");
+    	
     	}else if(url_Command.equals("/LoginOK.me")) { //로그인
     		//UI+로직
     		action = new MemberLoginService();

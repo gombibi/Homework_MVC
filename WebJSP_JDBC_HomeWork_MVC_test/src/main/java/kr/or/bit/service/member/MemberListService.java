@@ -1,4 +1,4 @@
-package kr.or.bit.service;
+package kr.or.bit.service.member;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class MemberListService implements Action {
 				
 				forward = new ActionForward();
 				forward.setRedirect(false); //forward
-				forward.setPath("Memberlist.jsp");
+				forward.setPath("WEB-INF/views/member/Memberlist.jsp");
 			
 			}else {
 				msg = "권한이 없습니다";

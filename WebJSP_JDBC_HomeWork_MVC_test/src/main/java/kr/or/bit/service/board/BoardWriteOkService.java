@@ -9,7 +9,7 @@ import kr.or.bit.action.ActionForward;
 import kr.or.bit.dao.BoardDao;
 import kr.or.bit.dto.Board;
 
-public class BoardWriteService implements Action {
+public class BoardWriteOkService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
@@ -24,45 +24,46 @@ public class BoardWriteService implements Action {
 		
 		try{
 			//로그인 되어 있지 않을 경우, 접근 불가
-			if(!(request.getSession().getAttribute("userid")==null)) {
-				int idx = Integer.parseInt(request.getParameter("idx")); 
-				String writer = request.getParameter("writer"); 
-				String subject = request.getParameter("subject"); 
-				String content = request.getParameter("content"); 
-				String writedate = request.getParameter("writedate"); 
+			if(!(loginMember==null)) {
+				String subject = request.getParameter("subject");
+				String writer = request.getParameter("writer");
+				String email = request.getParameter("email");
+				String homepage = request.getParameter("homepage");
+				String content = request.getParameter("content");
+				String filename = request.getParameter("filename");
+				
+				System.out.println(subject);
 		    	
 				Board b = new Board();
-				b.setIdx(idx);
-				b.setWriter(writer);
+				
 				b.setSubject(subject);
+				b.setWriter(writer);
+				b.setEmail(email);
+				b.setHomepage(homepage);
 				b.setContent(content);
-				b.setWritedate(writedate);
+				b.setFilename(filename);
 				
 				BoardDao dao = new BoardDao();
-				int result = dao.boardWrite(b);
+					
+				int result = dao.writeok(b);
+					
+				// write.jsp 화면 >> writeok.jsp 처리 >> service >> dao > DB 작업 >
+				// return dao > return service > writeok.jsp 결과처리 >> 이동 (공통) >> redirect.jsp
 		    	
-				    if(result > 0){
-				    	msg ="등록되었습니다.";
-				    	url ="/board/BoardList.jsp";
-				    	
-				    	request.setAttribute("board_msg",msg);
-					    request.setAttribute("board_url", url);
-					
-					    forward = new ActionForward();
-					    forward.setRedirect(true);
-					    forward.setPath("/WEB-INF/views/redirect.jsp");
-					    
-				    }else{
-				    	msg="등록 실패";
-				    	url="/board/BoardList.jsp";
-				    	
-				    	request.setAttribute("board_msg",msg);
-					    request.setAttribute("board_url", url);
-					
-					    forward = new ActionForward();
-					    forward.setRedirect(false);
-					    forward.setPath("/WEB-INF/views/redirect.jsp");
-				    }
+			    if(result > 0){
+			    	msg ="등록되었습니다.";
+			    	url ="BoardList.bd";
+			    	
+			    }else{
+			    	msg="등록 실패";
+			    	url="BoardWrite.bd";;
+			    }
+		    	request.setAttribute("board_msg",msg);
+			    request.setAttribute("board_url", url);
+			
+			    forward = new ActionForward();
+			    forward.setRedirect(false);
+			    forward.setPath("/WEB-INF/views/redirect.jsp");
 				    
 			}else {
 				msg = "로그인 후 이용 가능합니다";

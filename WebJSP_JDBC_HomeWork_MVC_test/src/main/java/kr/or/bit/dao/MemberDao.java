@@ -125,7 +125,7 @@ public class MemberDao {
 		while (rs.next()) {
 			Member m = new Member();
 			m.setId(rs.getString("id"));
-			m.setEmail(rs.getString("ip"));
+			m.setIp(rs.getString("ip"));
 			memberlist.add(m);
 		}
 
@@ -238,18 +238,25 @@ public class MemberDao {
 	}
 	
 	//select count(*) from koreamember where name like ?
-	public ArrayList<Member> getSearchListByName(String name) {
+	public ArrayList<Member> getSearchListByName(String searchname) {
 
 		Connection conn =null;//추가
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		conn= ConnectionHelper.getConnection("oracle");//추가
+		String sql = "";
+
 		Member m = null;
 		ArrayList<Member> searchlist= new ArrayList<Member>();
 		try {
-				conn= ConnectionHelper.getConnection("oracle");//추가
-				String sql = "select * from koreamember where name=?";
+				if (searchname.equals("")) {
+					sql = "select id, name, email from koreaMember";
+				} else {
+					sql = "select id, name, email from koreaMember where (id like '%" + searchname + "' or " + "id like '" + searchname
+							+ "%' or " + "id like '%" + searchname + "%')";
+				}
+			
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, name);
 				
 				rs = pstmt.executeQuery();
 				
@@ -275,5 +282,41 @@ public class MemberDao {
 			} 
 		}
 		return searchlist;
+	}
+	
+	// 추가함수 (ID 존재 유무 판단 함수)
+	public String isCheckById(String id) {
+		Connection conn = null;// 추가
+		String ismemoid = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = ConnectionHelper.getConnection("oracle");// 추가
+			String sql = "select id from koreaMember where id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				ismemoid = "false";
+			} else {
+				ismemoid = "true";
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			ConnectionHelper.close(rs);
+			ConnectionHelper.close(pstmt);
+			ConnectionHelper.close(conn);
+			try {
+				conn.close();// 반환하기
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+		}
+		return ismemoid;
 	}
 }

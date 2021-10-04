@@ -27,13 +27,10 @@ td {
 		style="width: 900px; height: 500px; margin-left: auto; margin-right: auto;">
 		<tr>
 			<td colspan="2">
-				<jsp:include page="/commonview/Top.jsp"></jsp:include>
+				<jsp:include page="/WEB-INF/views/common/Top.jsp"></jsp:include>
 			</td>
 		</tr>
 		<tr>
-			<td style="width: 200px">
-				<jsp:include page="/commonview/Left.jsp"></jsp:include>
-			</td>
 			<td style="width: 700px">
 				<form action="LoginOK.me" method="post" name="loginForm" id="loginForm">
 					<h3 style="text-align: center;">Login Page</h3>
@@ -59,7 +56,7 @@ td {
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2"><jsp:include page="/commonview/Bottom.jsp"></jsp:include></td>
+			<td colspan="2"><jsp:include page="/WEB-INF/views/common/Bottom.jsp"></jsp:include></td>
 		</tr>
 	</table>
 </body>

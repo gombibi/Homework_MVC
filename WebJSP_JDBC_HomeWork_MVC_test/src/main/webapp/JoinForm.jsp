@@ -26,6 +26,64 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	
 	<script type="text/javascript">
+	
+	$(document).ready(function(){
+		//id="message" 클릭하면 $.ajax 사용해서 
+		//요청 @WebServlet("/MemoId")
+		//http://192.168.0.3:8090/WebServlet_4_memo_mvc/MemoId
+		//url:"MemoId"
+		//"true" 사용가능
+		//"false" 사용불가 다시입력 ...
+		let idcheck = false;
+		
+		$('#message').click(function(){
+			if($('#id').val() == ""){
+				$('#idchecker').text("아이디를 입력해주세요.");
+				$('#idchecker').css('color', '#f82a2aa3');
+				$('#id').focus();
+				idcheck = false;
+				buttonlive();
+			}else{
+			   $.ajax(
+				 {
+					url:"LoginIdCheck.me",
+					data:{id:$('#id').val()},
+					dataType:"html",
+					success:function(responsedata){
+						$('#idchecker').html(responsedata);
+						let data =responsedata.trim();
+						 if(data == "true"){
+							   $('#idchecker').text("사용가능한 아이디입니다.");
+							   $('#idchecker').css('color', '#199894b3');
+							   $('#pwd').focus();
+							   idcheck = true;
+						 }else{
+							   $('#idchecker').text("사용중인 아이디입니다.");
+							   $('#idchecker').css('color', '#f82a2aa3');
+							   $('#id').val("");
+							   $('#id').focus();
+							   idcheck = false;
+						  }
+						   buttonlive();
+					}
+				 }	  
+			  );
+			}
+		});
+		
+		
+		// 제출버튼 활성화 함수
+		function buttonlive() {
+
+			if (idcheck) {
+				$("#checkit").prop("disabled", false);
+			} else {
+				$("#checkit").prop("disabled", true);
+			}
+		}
+		
+	});
+	
 	 //jquery 로 간단하게 유효성 check 하기
 	 $(function() {
 	  	$('#joinForm').submit(function() {
@@ -46,7 +104,7 @@
 	    alert('age를 입력해 주세요.');
 	    $('#age').focus();
 	    return false;
-	   }else if ($('#email').val() == "") { // 우편번호
+	   }else if ($('#email').val() == "") { // 메일
 	    alert('email를 입력해 주세요.');
 	    $('#email').focus();
 	    return false;
@@ -62,13 +120,10 @@
 		style="width: 900px; height: 500px; margin-left: auto; margin-right: auto;">
 		<tr>
 			<td colspan="2">
-				<jsp:include page="/commonview/Top.jsp"></jsp:include>
+				<jsp:include page="/WEB-INF/views/common/Top.jsp"></jsp:include>
 			</td>
 		</tr>
 		<tr>
-			<td style="width: 200px">
-				<jsp:include page="/commonview/Left.jsp"></jsp:include>
-			</td>
 			<td style="width: 700px">
 				<form action="JoinOK.me" method="post" name="joinForm" id="joinForm">
 					<h3 style="text-align: center;">회원가입</h3>
@@ -77,7 +132,12 @@
 							style="width: 400px; height: 200px; margin-left: auto; margin-right: auto;">
 							<tr>
 								<th>ID:</th>
-								<td><input type="text" name="id" id="id"></td>
+								<td><input type="text" name="id" id="id">
+								<input type="button" value="ID확인" id="message"></td>
+							</tr>
+							<tr>
+								<th>ID체크:</th>
+								<td colspan="2" id="idchecker"></th>
 							</tr>
 							<tr>
 								<th>PWD:</th>
@@ -114,7 +174,7 @@
 		</tr>
 		<tr>
 			<td colspan="2">
-				<jsp:include page="/commonview/Bottom.jsp"></jsp:include>
+				<jsp:include page="/WEB-INF/views/common/Bottom.jsp"></jsp:include>
 			</td>
 		</tr>
 	</table>
