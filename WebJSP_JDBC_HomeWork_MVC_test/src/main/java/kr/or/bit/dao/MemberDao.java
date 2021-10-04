@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import kr.or.bit.dto.Member;
 import kr.or.bit.utils.ConnectionHelper;
+import kr.or.bit.utils.SqlManager;
 
 /*
 DB작업
@@ -24,15 +25,8 @@ public class MemberDao {
 
 	// Insert
 	public int insertMember(Member m) {
-		Connection conn = null;// 추가
-		int resultrow = 0;
-		PreparedStatement pstmt = null;
-
-		try {
-			conn = ConnectionHelper.getConnection("oracle");// 추가
-
-			String sql = "insert into koreamember(id,pwd,name,age,gender,email,ip) values(?,?,?,?,?,?,?)";
-			pstmt = conn.prepareStatement(sql);
+		String sql = "insert into koreamember(id,pwd,name,age,gender,email,ip) values(?,?,?,?,?,?,?)";
+		return SqlManager.run(sql, pstmt -> {
 			pstmt.setString(1, m.getId());
 			pstmt.setString(2, m.getPwd());
 			pstmt.setString(3, m.getName());
@@ -40,22 +34,43 @@ public class MemberDao {
 			pstmt.setString(5, m.getGender());
 			pstmt.setString(6, m.getEmail());
 			pstmt.setString(7, m.getIp());
-
-			resultrow = pstmt.executeUpdate();
-
-		} catch (Exception e) {
-			System.out.println("Insert : " + e.getMessage());
-		} finally {
-			ConnectionHelper.close(pstmt);
-			ConnectionHelper.close(conn);
-			try {
-				conn.close(); // 반환하기
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return resultrow;
+			return pstmt.executeUpdate();
+		});
 	}
+	
+//	public int insertMember(Member m) {
+//		Connection conn = null;// 추가
+//		int resultrow = 0;
+//		PreparedStatement pstmt = null;
+//
+//		try {
+//			conn = ConnectionHelper.getConnection("oracle");// 추가
+//
+//			String sql = "insert into koreamember(id,pwd,name,age,gender,email,ip) values(?,?,?,?,?,?,?)";
+//			pstmt = conn.prepareStatement(sql);
+//			pstmt.setString(1, m.getId());
+//			pstmt.setString(2, m.getPwd());
+//			pstmt.setString(3, m.getName());
+//			pstmt.setInt(4, m.getAge());
+//			pstmt.setString(5, m.getGender());
+//			pstmt.setString(6, m.getEmail());
+//			pstmt.setString(7, m.getIp());
+//
+//			resultrow = pstmt.executeUpdate();
+//
+//		} catch (Exception e) {
+//			System.out.println("Insert : " + e.getMessage());
+//		} finally {
+//			ConnectionHelper.close(pstmt);
+//			ConnectionHelper.close(conn);
+//			try {
+//				conn.close(); // 반환하기
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		return resultrow;
+//	}
 
 	public boolean checkIdPwd(String id, String pwd) {
 		Connection conn = null;// 추가
